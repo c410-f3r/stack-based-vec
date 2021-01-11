@@ -1,3 +1,6 @@
+[features]
+default = []
+
 [package]
 edition = '2018'
 name = 'stack-based-vec'

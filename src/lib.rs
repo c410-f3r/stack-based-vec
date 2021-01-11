@@ -1,12 +1,16 @@
-#![allow(trivial_casts, missing_docs)]
+//! ArrayVec
+
+#![allow(trivial_casts, unsafe_code, unstable_features)]
 #![feature(
     const_fn,
+    const_intrinsic_copy,
     const_maybe_uninit_as_ptr,
     const_mut_refs,
+    const_ptr_offset,
+    const_ptr_read,
     const_raw_ptr_deref,
     const_slice_from_raw_parts,
     exact_size_is_empty,
-    min_const_generics,
     slice_partition_dedup,
     trusted_len
 )]
@@ -27,6 +31,7 @@ use core::{
 };
 pub use {drain::Drain, splice::Splice};
 
+/// ArrayVec
 pub struct ArrayVec<T, const N: usize> {
     data: MaybeUninit<[T; N]>,
     len: usize,
@@ -417,7 +422,7 @@ impl<T, const N: usize> ArrayVec<T, N> {
     /// assert_eq!(v.as_slice(), &[1, 2]);
     /// ```
     #[inline]
-    pub fn pop(&mut self) -> Option<T> {
+    pub const fn pop(&mut self) -> Option<T> {
         if self.is_empty() {
             None
         } else {
@@ -462,7 +467,7 @@ impl<T, const N: usize> ArrayVec<T, N> {
     /// assert_eq!(v.remove(0).unwrap(), 1);
     /// assert_eq!(v.as_slice(), &[2, 3]);
     /// ```
-    pub fn remove(&mut self, idx: usize) -> Option<T> {
+    pub const fn remove(&mut self, idx: usize) -> Option<T> {
         let len = self.len;
         if idx >= len {
             return None;

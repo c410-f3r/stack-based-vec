@@ -7,6 +7,7 @@ use core::{
     slice,
 };
 
+/// Drain
 pub struct Drain<'a, T, const N: usize> {
     /// Current remaining range to remove
     pub(crate) iter: slice::Iter<'a, T>,
@@ -86,7 +87,7 @@ impl<T, const N: usize> Drop for Drain<'_, T, N> {
         }
 
         // Drop a `DropGuard` to move back the non-drained tail of `self`.
-        DropGuard(self);
+        let _ = DropGuard(self);
     }
 }
 

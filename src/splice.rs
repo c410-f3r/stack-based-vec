@@ -1,6 +1,7 @@
 use crate::Drain;
 use core::{ptr, slice};
 
+/// Splice
 #[derive(Debug)]
 pub struct Splice<'a, I, const N: usize>
 where
